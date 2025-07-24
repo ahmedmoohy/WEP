@@ -1,12 +1,4 @@
-// تهيئة Firebase في صفحات HTML عادية
-
-// الكود ده هيشتغل مع ملفات HTML اللي فيها:
-// <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
-// <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
-// <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
-// <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js"></script>
-
-// 1️⃣ التهيئة
+// تهيئة Firebase للـ Browser العادي
 const firebaseConfig = {
   apiKey: "AIzaSyASA2SUjwfV4zLe122-Bt54Td5xTmRzZ7Q",
   authDomain: "edu-project-44337.firebaseapp.com",
@@ -17,13 +9,13 @@ const firebaseConfig = {
   measurementId: "G-RTXZHGB10P"
 };
 
-// Initialize Firebase
+// Initialize
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-const analytics = firebase.analytics();
+firebase.analytics();
 
-// 2️⃣ الدوال
+// دالة إنشاء الحساب
 function register() {
   const username = document.getElementById('reg-username').value;
   const email = document.getElementById('reg-email').value;
@@ -38,8 +30,7 @@ function register() {
   auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-
-      // إضافة بيانات المستخدم في Firestore
+      // إضافة بيانات Firestore
       return db.collection('users').doc(user.uid).set({
         username: username,
         email: email,
@@ -47,24 +38,45 @@ function register() {
       });
     })
     .then(() => {
-      alert('تم إنشاء الحساب بنجاح!');
-      window.location.href = 'login.html';
+      alert('تم إنشاء الحساب والدخول!');
+      window.location.href = 'dashboard.html'; // يدخل مباشرة
     })
     .catch((error) => {
       alert(error.message);
     });
 }
 
+// دالة تسجيل الدخول
 function login() {
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
 
   auth.signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      alert('تم تسجيل الدخول بنجاح!');
+    .then(() => {
+      alert('تم تسجيل الدخول!');
       window.location.href = 'dashboard.html';
     })
     .catch((error) => {
       alert(error.message);
     });
+}
+
+// تحقق من حالة تسجيل الدخول في الداشبورد
+function checkAuthAndLoadDashboard() {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      // جلب بيانات المستخدم
+      db.collection('users').doc(user.uid).get().then(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          document.getElementById('welcome').innerText = `مرحبًا ${data.username}!`;
+        } else {
+          document.getElementById('welcome').innerText = 'مرحبًا!';
+        }
+      });
+    } else {
+      // لو مش مسجل دخول يرجع للّوجين
+      window.location.href = 'login.html';
+    }
+  });
 }
