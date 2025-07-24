@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>إنشاء حساب جديد</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>إنشاء حساب</h2>
+    <input type="text" id="reg-username" placeholder="اسم المستخدم">
+    <input type="email" id="reg-email" placeholder="البريد الإلكتروني">
+    <input type="password" id="reg-password" placeholder="كلمة المرور">
+    <input type="password" id="reg-confirm" placeholder="تأكيد كلمة المرور">
+    <button onclick="register()">تسجيل</button>
+    <a href="login.html">لديك حساب بالفعل؟ سجل دخول</a>
+  </div>
+
+  <!-- Firebase scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+
+  <!-- ملف الأكواد الخاصة بك -->
+  <script src="script.js"></script>
+
+  <!-- إضافة كود تهيئة Firebase هنا أو في script.js -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+
+</body>
+</html>
