@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>منصة تعليمية - تسجيل الدخول</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      direction: rtl;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+    }
+    button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    a {
+      display: block;
+      margin-top: 10px;
+      color: #007bff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="login-box">
+    <h2>تسجيل الدخول</h2>
+    <input type="email" id="login-email" placeholder="البريد الإلكتروني">
+    <input type="password" id="login-password" placeholder="كلمة المرور">
+    <button onclick="login()">دخول</button>
+    <a onclick="showRegister()">إنشاء حساب جديد</a>
+  </div>
+
+  <div class="container" id="register-box" style="display: none;">
+    <h2>إنشاء حساب</h2>
+    <input type="text" id="reg-username" placeholder="اسم المستخدم">
+    <input type="email" id="reg-email" placeholder="البريد الإلكتروني">
+    <input type="password" id="reg-password" placeholder="كلمة المرور">
+    <input type="password" id="reg-confirm" placeholder="تأكيد كلمة المرور">
+    <button onclick="register()">تسجيل</button>
+    <a onclick="showLogin()">لديك حساب بالفعل؟</a>
+  </div>
+
+  <script>
+    function showRegister() {
+      document.getElementById('login-box').style.display = 'none';
+      document.getElementById('register-box').style.display = 'block';
+    }
+
+    function showLogin() {
+      document.getElementById('register-box').style.display = 'none';
+      document.getElementById('login-box').style.display = 'block';
+    }
+
+    function login() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      alert(`تسجيل دخول: \nالإيميل: ${email}\nكلمة المرور: ${password}`);
+      // هنا هتربطه بقاعدة البيانات لاحقًا
+    }
+
+    function register() {
+      const username = document.getElementById('reg-username').value;
+      const email = document.getElementById('reg-email').value;
+      const password = document.getElementById('reg-password').value;
+      const confirm = document.getElementById('reg-confirm').value;
+
+      if (password !== confirm) {
+        alert('كلمة المرور غير متطابقة!');
+        return;
+      }
+      alert(`إنشاء حساب: \nالاسم: ${username}\nالإيميل: ${email}`);
+      // هنا هتربطه بقاعدة البيانات لاحقًا
+    }
+  </script>
+</body>
+</html>
